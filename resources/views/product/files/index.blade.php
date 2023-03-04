@@ -9,7 +9,7 @@
                     <x-splade-link slideover
                                    href="{{ route('product-files.create') }}"
                                    class="text-sm font-normal rounded-md shadow-sm bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-3 focus:outline-none focus:shadow-outline">
-                    {{ __('Update product file') }}
+                    {{ __('Upload product file') }}
                     </x-splade-link>
                 </span>
             </div>

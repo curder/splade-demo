@@ -6,12 +6,12 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-2">
+            <x-product-columns name="Overview" :columns="$overviews" />
+            <x-product-columns name="Price" :columns="$prices" />
+            <x-product-columns name="Attributes" :columns="$attributes" />
+            <x-product-columns name="Export" :columns="$exports" />
+            <x-product-columns name="Additional" :columns="$additionals" />
         </div>
     </div>
 </x-app-layout>
