@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Product;
 
+use App\Enums\Product\Price;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Arr;
 
@@ -15,7 +16,7 @@ use Illuminate\Support\Arr;
  * @property array        $case
  * @property array        $sheet
  * @property array        $spool
- * @property array        $nd0803977
+ * @property array        $nd_0803977
  * @property array        $cmw_kit10_nd
  * @property array        $nd_298_16134
  * @property array        $bottle
@@ -30,82 +31,82 @@ trait HasPrice
 {
     public function bulk() : Attribute
     {
-        return Attribute::get(fn() => $this->price('bulk'));
+        return Attribute::get(fn() => $this->price(Price::bulk));
+    }
+    private function price(Price $column)
+    {
+        return Arr::get($this->price, $column->value);
     }
     public function box() : Attribute
     {
-        return Attribute::get(fn() => $this->price('box'));
+        return Attribute::get(fn() => $this->price(Price::box));
     }
     public function stock() : Attribute
     {
-        return Attribute::get(fn() => $this->price('stock'));
+        return Attribute::get(fn() => $this->price(Price::stock));
     }
     public function retailPackage() : Attribute
     {
-        return Attribute::get(fn() => $this->price('retail_package'));
+        return Attribute::get(fn() => $this->price(Price::retail_package));
     }
     public function tray() : Attribute
     {
-        return Attribute::get(fn() => $this->price('tray'));
+        return Attribute::get(fn() => $this->price(Price::tray));
     }
     public function tapeAndBoxTb() : Attribute
     {
-        return Attribute::get(fn() => $this->price('tape_&_box_tb'));
+        return Attribute::get(fn() => $this->price(Price::tape_and_box_tb));
     }
     public function case() : Attribute
     {
-        return Attribute::get(fn() => $this->price('case'));
+        return Attribute::get(fn() => $this->price(Price::case));
     }
     public function sheet() : Attribute
     {
-        return Attribute::get(fn() => $this->price('sheet'));
+        return Attribute::get(fn() => $this->price(Price::sheet));
     }
     public function spool() : Attribute
     {
-        return Attribute::get(fn() => $this->price('spool'));
+        return Attribute::get(fn() => $this->price(Price::spool));
     }
     public function nd0803977() : Attribute
     {
-        return Attribute::get(fn() => $this->price('0803977-nd'));
+        return Attribute::get(fn() => $this->price(Price::nd_0803977));
     }
     public function cmwKit10Nd() : Attribute
     {
-        return Attribute::get(fn() => $this->price('cmw-kit10-nd'));
+        return Attribute::get(fn() => $this->price(Price::cmw_kit10_nd));
     }
     public function nd29816134() : Attribute
     {
-        return Attribute::get(fn() => $this->price('298-16134-nd'));
+        return Attribute::get(fn() => $this->price(Price::nd_29816134));
     }
     public function bottle() : Attribute
     {
-        return Attribute::get(fn() => $this->price('bottle'));
+        return Attribute::get(fn() => $this->price(Price::bottle));
     }
     public function ct() : Attribute
     {
-        return Attribute::get(fn() => $this->price('ct'));
+        return Attribute::get(fn() => $this->price(Price::ct));
     }
     public function tr() : Attribute
     {
-        return Attribute::get(fn() => $this->price('tr'));
+        return Attribute::get(fn() => $this->price(Price::tr));
     }
     public function cutTapeCt() : Attribute
     {
-        return Attribute::get(fn() => $this->price('cut_tape_ct'));
+        return Attribute::get(fn() => $this->price(Price::cut_tape_ct));
     }
     public function tube() : Attribute
     {
-        return Attribute::get(fn() => $this->price('tube'));
+        return Attribute::get(fn() => $this->price(Price::tube));
     }
     public function strip() : Attribute
     {
-        return Attribute::get(fn() => $this->price('strip'));
+        return Attribute::get(fn() => $this->price(Price::strip));
     }
     public function digiReel() : Attribute
     {
-        return Attribute::get(fn() => $this->price('digi-reel®'));
-    }
-    protected function price(string $column)
-    {
-        return Arr::get($this->price, $column);
+        return Attribute::get(fn() => $this->price(Price::digi_reel));
     }
 }

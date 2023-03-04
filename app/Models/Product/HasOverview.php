@@ -1,59 +1,52 @@
 <?php
 namespace App\Models\Product;
 
+use App\Enums\Product\Overview;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Arr;
 
 /**
- * @property string $name
- * @property string $pdf_url
- * @property string $description
- * @property string $manufacturer
- * @property string $detailed_description
- * @property string $manufacturer_product_number
- * @property string $manufacturer_standard_lead_time
+ * @property string                         $name
+ * @property string                         $pdf_url
+ * @property string                         $description
+ * @property string                         $manufacturer
+ * @property string                         $detailed_description
+ * @property string                         $manufacturer_product_number
+ * @property string                         $manufacturer_standard_lead_time
  * @property \Illuminate\Support\Collection $overview
  */
 trait HasOverview
 {
-    public function name(): Attribute
+    public function name() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('name'));
+        return Attribute::get(fn() => $this->overview(Overview::name));
     }
-    public function pdfUrl(): Attribute
+    private function overview(Overview $column)
     {
-        return Attribute::get(fn () => $this->overview('pdf_url'));
+        return Arr::get($this->overview, $column->value);
     }
-
-    public function description(): Attribute
+    public function pdfUrl() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('description'));
+        return Attribute::get(fn() => $this->overview(Overview::pdf_url));
     }
-
-    public function manufacturer(): Attribute
+    public function description() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('manufacturer'));
+        return Attribute::get(fn() => $this->overview(Overview::description));
     }
-    public function detailedDescription(): Attribute
+    public function manufacturer() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('detailed_description'));
+        return Attribute::get(fn() => $this->overview(Overview::manufacturer));
+    }
+    public function detailedDescription() : Attribute
+    {
+        return Attribute::get(fn() => $this->overview(Overview::detailed_description));
     }
     public function manufacturerStandardLeadTime() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('manufacturer_standard_lead_time'));
+        return Attribute::get(fn() => $this->overview(Overview::manufacturer_standard_lead_time));
     }
-
-    public function manufacturerProductNumber(): Attribute
+    public function manufacturerProductNumber() : Attribute
     {
-        return Attribute::get(fn () => $this->overview('manufacturer_product_number'));
-    }
-    /**
-     * @param $column
-     *
-     * @return array|\ArrayAccess|mixed
-     */
-    protected function overview($column)
-    {
-        return Arr::get($this->overview, $column);
+        return Attribute::get(fn() => $this->overview(Overview::manufacturer_product_number));
     }
 }

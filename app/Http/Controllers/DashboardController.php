@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use ProtoneMedia\Splade\Facades\Splade;
 
 class DashboardController extends Controller
 {
@@ -15,25 +14,27 @@ class DashboardController extends Controller
      *
      * @return View
      */
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request) : View
     {
-        $overviews = Splade::onLazy(fn() => $this->getJsonKeys('overview'));
-        $prices = Splade::onLazy(fn() => $this->getJsonKeys('price'));
-        $attributes = Splade::onLazy(fn () => $this->getJsonKeys('attributes'));
-        $exports = Splade::onLazy(fn () => $this->getJsonKeys('export'));
-        $additionals = Splade::onLazy(fn () => $this->getJsonKeys('additional'));
+        //        $output = collect(Attributes::cases())->map(function ($enum) {
+        //            $template = <<<'DOC'
+        //    public function %s() : Attribute
+        //    {
+        //        return Attribute::get(fn() => $this->attributes(Attributes::%s));
+        //    }
+        //DOC;
+        //
+        //            return sprintf($template, Str::camel($enum->name), $enum->name);
+        //        })->implode("\n");
+        //        ray($output);
+        $columns = [
+            'overview'   => Product::getColumns('overview'),
+            'price'      => Product::getColumns('price'),
+            'attributes' => Product::getColumns('attributes'),
+            'export'     => Product::getColumns('export'),
+            'additional' => Product::getColumns('additional'),
+        ];
 
-        return view('dashboard', compact(
-            'overviews',
-            'prices',
-            'attributes',
-            'exports',
-            'additionals',
-        ));
-    }
-
-    public function getJsonKeys(string $column)
-    {
-        return Product::query()->pluck($column)->filter()->map->keys()->flatten()->unique()->values();
+        return view('dashboard', compact('columns'));
     }
 }
