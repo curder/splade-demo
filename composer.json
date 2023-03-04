@@ -10,6 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "lorisleiva/laravel-actions": "^2.5",
         "protonemedia/laravel-splade-breeze": "^2.1"
     },
     "require-dev": {
@@ -30,7 +31,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Supports/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

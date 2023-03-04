@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductFilesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,12 @@ Route::middleware('splade')->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->middleware(['verified'])->name('dashboard');
+
+        Route::post('product/files/{file}/import', [ProductFilesController::class, 'import'])
+             ->name('product-files.import');
+        Route::resource('/product/files', ProductFilesController::class)
+            ->only(['index', 'create', 'store', 'destroy'])
+             ->names('product-files');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
