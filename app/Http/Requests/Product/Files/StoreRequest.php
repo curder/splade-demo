@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Product\Files;
 
+use App\Rules\FileAlreadyExist;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Http\FormRequest;
 use ProtoneMedia\Splade\FileUploads\HasSpladeFileUploads;
 
@@ -15,7 +17,7 @@ class StoreRequest extends FormRequest implements HasSpladeFileUploads
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
@@ -25,10 +27,15 @@ class StoreRequest extends FormRequest implements HasSpladeFileUploads
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules() : array
     {
         return [
-            'file' => ['required', 'file', 'mimes:csv,json'],
+            'file' => [
+                'required',
+                'file',
+                'mimes:csv,json',
+                new FileAlreadyExist,
+            ],
         ];
     }
 }

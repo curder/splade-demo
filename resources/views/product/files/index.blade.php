@@ -35,7 +35,15 @@
                                            href="{{ route('product-files.import', $product_file) }}"
                                            data="{ id: {{ $product_file->id }} }"
                                            method="POST"
-                            >{{ __('product-files.import') }}</x-splade-link>
+                            >
+                                @if($product_file->status === 'init')
+                                    {{ __('product-files.import') }}
+                                @elseif($product_file->status === 'processing')
+                                    {{ __('product-files.processing') }}
+                                @else
+                                    {{ __('product-files.done') }}
+                                @endif
+                            </x-splade-link>
 
                             <x-splade-link confirm="{{ __('product-files.destroy_confirm') }}"
                                            confirm-text="{{ __('product-files.destroy_confirm_text') }}"

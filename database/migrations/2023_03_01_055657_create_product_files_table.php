@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('file_name');
             $table->unsignedBigInteger('file_size')->default(0);
             $table->unsignedBigInteger('number_of_rows')->default(0);
-            $table->boolean('imported')->default(false);
+            $table->string('hash');
+            $table->string('status')->default('init'); // init、processing、done
             $table->timestamps();
         });
     }

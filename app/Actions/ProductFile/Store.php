@@ -1,33 +1,24 @@
 <?php
-
 namespace App\Actions\ProductFile;
 
-use App\Http\Requests\Product\Files\StoreRequest;
-use App\Models\ProductFile;
-use Closure;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
+use App\Http\Requests\Product\Files\StoreRequest;
+use App\Actions\ProductFile\Store\{Store as StoreDB,
+    CalculateTheNumberOfRows
+};
 
 class Store
 {
     use AsAction;
 
-    public function handle(StoreRequest $request, Closure $next)
+    public function handle(StoreRequest $request) : void
     {
-        $disk = 'public';
-        $file = $request->file;
-
-        $origin_name = $file->getClientOriginalName();
-        $file_name = $file->store('', compact('disk'));
-        $file_size = $file->getSize();
-
-        return $next([
-            ProductFile::query()->create([
-                'disk' => $disk,
-                'origin_name' => $origin_name,
-                'file_name' => $file_name,
-                'file_size' => $file_size,
-            ])
+        DB::beginTransaction();
+        pipe($request, [
+            StoreDB::class,
+            CalculateTheNumberOfRows::class,
         ]);
+        DB::commit();
     }
 }

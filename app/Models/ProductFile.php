@@ -26,7 +26,7 @@ class ProductFile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'disk', 'origin_name', 'file_name', 'file_size', 'number_of_rows', 'imported',
+        'disk', 'origin_name', 'file_name', 'file_size', 'number_of_rows', 'status', 'hash',
     ];
 
     public function lazyContent(): Attribute
@@ -48,12 +48,13 @@ class ProductFile extends Model
     {
         return Attribute::get(fn () => $this->parseCategory()->get(key: 'category_name'));
     }
+
     public function categoryId(): Attribute
     {
         return Attribute::get(fn () => (int) $this->parseCategory()->get(key: 'category_id'));
     }
 
-    public function parseCategory() : Collection
+    protected function parseCategory() : Collection
     {
         // alarms-buzzers-and-sirens-157_cluster.csv OR aluminum-electrolytic-capacitors-58_cluster.csv
         $name = collect(explode('_', $this->origin_name))->first(); // 删除后缀

@@ -18,8 +18,10 @@ class Import
      *
      * @throws \Throwable
      */
-    public function handle(ProductFile $file)
+    public function handle(ProductFile $file) : void
     {
+        $file->update(['status' => 'processing']);
+
         $batch = Bus::batch([]);
 
         $file->lazy_content
@@ -32,12 +34,12 @@ class Import
                             'category_name' => $file->category_name,
                         ])
                     )
-                )->each(function($item) use ($batch){
+                )->each(function($item) use ($batch) {
                     $batch->add(new ProductFileProcess($item));
                 });
 
         $batch->then(
-            fn() => $file->update(['imported' => true])
+            fn() => $file->update(['status' => 'done'])
         )->dispatch();
     }
 }

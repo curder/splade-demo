@@ -36,21 +36,17 @@ class ProductFilesController extends Controller
     {
         return view('product.files.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreRequest  $request
+     * @param StoreRequest                   $request
+     * @param \App\Actions\ProductFile\Store $action
+     *
      * @return RedirectResponse
      */
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request, Actions\ProductFile\Store $action): RedirectResponse
     {
-        DB::beginTransaction();
-        pipe($request, [
-            Actions\ProductFile\Store::class,
-            Actions\ProductFile\Store\CalculateTheNumberOfRows::class,
-        ]);
-        DB::commit();
+        $action->handle($request);
 
         return redirect()->to($request->header('referer'));
     }

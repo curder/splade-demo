@@ -12,26 +12,12 @@ class CalculateTheNumberOfRows
 {
     use AsAction;
 
-    public function handle(array $payload, Closure $next)
+    public function handle(array $payload, Closure $next) : void
     {
         /** @var ProductFile $file */
         [$file] = $payload;
 
-        $filename = collect([
-            Arr::get(array: config('filesystems'), key: 'disks.' . $file->disk . '.root'),
-            $file->file_name
-        ])->join('/');
-
-        $count = $file->lazy_content->count();
-//        $count = LazyCollection::make(function() use ($filename) {
-//            $handle = fopen(filename: $filename, mode: 'r');
-//
-//            while(($line = fgets($handle)) !== false) {
-//                yield $line;
-//            }
-//        })->count();
-
-        $file->number_of_rows = $count;
+        $file->number_of_rows = $file->lazy_content->count();
 
         $file->save();
     }

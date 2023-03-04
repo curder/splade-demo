@@ -31,7 +31,7 @@ class ProductFileProcess implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle() : void
     {
         $this->items->each(function($item) {
             // 判断是否存在

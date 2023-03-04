@@ -16,10 +16,15 @@
 
                         <div class="mt-4">
                             <x-splade-form
-                                filepond server
+                                filepond
+                                server
                                 action="{{ route('product-files.store') }}"
                                 class="space-y-4">
-                                @include('product.files.partials.form')
+                                <x-splade-file name="file"
+                                               label="{{ __('product-files.file') }}"
+                                               multiple
+                                               filepond />
+                                <x-splade-submit label="{{ __('product-files.store') }}" />
                             </x-splade-form>
                         </div>
                     </x-splade-modal>
